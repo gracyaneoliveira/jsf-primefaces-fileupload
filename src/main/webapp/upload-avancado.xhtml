@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="layout.xhtml">
+	<ui:define name="head">
+		Upload Avançado
+	</ui:define>
+
+	<ui:define name="body">
+		<h:form>
+			<p:growl showDetail="true" autoUpdate="true" />
+
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Uplaod: " for="fileUpload" />
+				<p:fileUpload id="fileUpload"
+					fileUploadListener="#{uploadAvancadoBean.upload}"
+					update="dataTable banner1 banner2" label="Escolher" uploadLabel="Enviar"
+					cancelLabel="Cancelar" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+					invalidFileMessage="São permitidas somente imagens (gif, jpeg, jpg e png)"
+					sizeLimit="614400"
+					invalidSizeMessage="O tamanho máximo permitido é de 6KB."
+					fileLimit="5"
+					fileLimitMessage="Só é possível escolher 5 arquivos por vez."
+					multiple="true" auto="false"
+					onstart="console.log('Iniciando envio de arquivo')"
+					onerror="console.log('Erro na requisição de envio')"
+					oncomplete="console.log('Envio concluído')" />
+			</h:panelGrid>
+
+			<p:spacer height="20px" />
+			
+			
+			<p:panel id="banner1" header="Banner 1" style="margin-bottom:20px; width:330px; display:inline-block;" >
+ 
+				<p:graphicImage value= "/resources/images/semimages.jpg" style="border:1px solid gray;" alt="banner 1" 
+				rendered="#{empty uploadAvancadoBean.imageBanner1 or uploadAvancadoBean.imageBanner1 == null}"/>
+				<p:graphicImage value= "#{uploadAvancadoBean.imageBanner1}" style="border:1px solid gray;" alt="banner 11" 
+				rendered="#{not empty uploadAvancadoBean.imageBanner1}" width="285px">
+					 <f:param name="idBanner" value="#{uploadAvancadoBean.fileBanner.canonicalFile}" />
+				</p:graphicImage>
+ 
+   			 </p:panel>
+   			 
+   			 <p:panel id="banner2" header="Banner 2" style="margin-bottom:20px; width:330px; display:inline-block;" >
+ 
+				<p:graphicImage value= "/resources/images/semimages.jpg"  style="border:1px solid gray;" alt="banner" 
+				rendered="#{empty uploadAvancadoBean.imageBanner2}"/>
+				<p:graphicImage value= "#{uploadAvancadoBean.imageBanner2}"  style="border:1px solid gray;" alt="banner" 
+				rendered="#{not empty uploadAvancadoBean.imageBanner2}"/>
+ 
+   			 </p:panel>
+   			 
+			<p:dataTable value="#{uploadAvancadoBean.arquivos}" var="file"
+				id="dataTable" style="width:80%">
+				<f:facet name="header">
+			        Arquivos
+			    </f:facet>
+				<p:column width="200">
+					<p:commandButton value="Baixar" ajax="false"
+						actionListener="#{descarregadorBean.descarregar(file.file)}"
+						icon="ui-icon-arrowthick-1-s">
+						<p:fileDownload value="#{descarregadorBean.streamedContent}" />
+					</p:commandButton>
+				</p:column>
+
+				<p:column headerText="Nome">
+					<h:outputText value="#{file.file.name.replace('thumbnail.','')}" />
+				</p:column>
+				<p:column headerText="Image" style="text-align:center;">
+					<p:graphicImage value= "#{uploadAvancadoBean.image}" alt="banner" style="width:50; heigth:50;">
+						<f:param name="pid" value="#{file.file.parentFile}" />
+						<f:param name="name" value="#{file.file.name}" />
+					</p:graphicImage>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
