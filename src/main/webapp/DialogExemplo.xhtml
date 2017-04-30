@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Dialog com ajax e SelectOneMenu</title>
+</h:head>
+
+<h:body>
+	
+	<h:form id="frm">
+		<p:messages />
+		<p:button value="Abrir dialog" onclick="PF('meuDialog').show(); return false;" />
+	
+		<p:dialog header="Acordar" widgetVar="meuDialog"
+			modal="true" resizable="false">
+			
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Hora : "/>
+				<p:outputLabel value="#{aulaBean.hora}" id="hr" title="Hora :" 
+				style="background-color:#008bec; 
+								border-radius:2px; 
+								padding: 2px 6px; 
+								vertical-align:middle;color:#fff; font-size: 13px;"/>
+				<p:outputLabel value="Dia:" for="dia" />
+				<p:selectOneMenu id="dia" value="#{aulaBean.diaAula}">
+					<p:ajax event="change" process="@this" update="hr"
+						listener="#{aulaBean.defineHora}" />
+				
+	    			<f:selectItem itemLabel="Selecione" />
+	    			<f:selectItems value="#{aulaBean.status}" var="st"
+	        			itemLabel="#{st.value}" itemValue="#{st.value}" />
+				</p:selectOneMenu>	
+			</p:panelGrid>
+		</p:dialog>
+	</h:form>
+
+</h:body>
+</html>

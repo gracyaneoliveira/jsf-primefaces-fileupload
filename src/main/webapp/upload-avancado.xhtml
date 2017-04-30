@@ -21,8 +21,8 @@
 					update="dataTable banner1 banner2" label="Escolher" uploadLabel="Enviar"
 					cancelLabel="Cancelar" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
 					invalidFileMessage="São permitidas somente imagens (gif, jpeg, jpg e png)"
-					sizeLimit="614400"
-					invalidSizeMessage="O tamanho máximo permitido é de 6KB."
+					sizeLimit="921600"
+					invalidSizeMessage="O tamanho máximo permitido é de 9KB."
 					fileLimit="5"
 					fileLimitMessage="Só é possível escolher 5 arquivos por vez."
 					multiple="true" auto="false"
@@ -68,7 +68,11 @@
 				</p:column>
 
 				<p:column headerText="Nome">
-					<h:outputText value="#{file.file.name.replace('thumbnail.','')}" />
+					<h:outputText value="#{file.file.name.replace('thumbnail.','').replace('.jpeg','').replace('.jpg','')}" 
+						style="background-color:#008bec; 
+								border-radius:0px; 
+								padding: 2px 6px; 
+								vertical-align:middle;color:#fff; font-size: 13px;"/>
 				</p:column>
 				<p:column headerText="Image" style="text-align:center;">
 					<p:graphicImage value= "#{uploadAvancadoBean.image}" alt="banner" style="width:50; heigth:50;">
