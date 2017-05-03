@@ -16,22 +16,25 @@ public class AulaBean implements Serializable{
 
 	private String diaAula;
 	private String hora = "00:00";
+	private Status statusEnum;
 	
 	public AulaBean(){
 		
 	}
 	
 	public void defineHora(){
+		System.out.println("# Value >> : "+ statusEnum.getValue());
 //		System.out.println("Event : "+ (SelectOneMenu(e.getSource()).getValue());
-		if(diaAula.equals(Status.SEGUNDA.getValue())){
+		if(statusEnum.equals(Status.SEGUNDA)){
 			setHora("08:00");
-		}else if (diaAula.equals(Status.TERCA.getValue())){
+		}else if (statusEnum.equals(Status.TERCA)){
 			setHora("09:00");
-		}else if (diaAula.equals(Status.QUARTA.getValue())){
+		}else if (statusEnum.equals(Status.QUARTA)){
 			setHora("10:00");
-		}else if (diaAula.isEmpty()){
+		}else {
 			setHora("00:00");
 		}
+		statusEnum = null;
 	}
 	
 	public Status [] getStatus(){
@@ -53,4 +56,13 @@ public class AulaBean implements Serializable{
 	public void setHora(String hora) {
 		this.hora = hora;
 	}
+
+	public Status getStatusEnum() {
+		return statusEnum;
+	}
+
+	public void setStatusEnum(Status statusEnum) {
+		this.statusEnum = statusEnum;
+	}
+	
 }

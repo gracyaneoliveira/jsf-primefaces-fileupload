@@ -27,13 +27,13 @@
 								padding: 2px 6px; 
 								vertical-align:middle;color:#fff; font-size: 13px;"/>
 				<p:outputLabel value="Dia:" for="dia" />
-				<p:selectOneMenu id="dia" value="#{aulaBean.diaAula}">
+				<p:selectOneMenu id="dia" value="#{aulaBean.statusEnum}" required="true">
 					<p:ajax event="change" process="@this" update="hr"
-						listener="#{aulaBean.defineHora}" />
+						listener="#{aulaBean.defineHora}"/>
 				
-	    			<f:selectItem itemLabel="Selecione" />
+	    			<f:selectItem itemLabel="Selecione" itemValue=""/>
 	    			<f:selectItems value="#{aulaBean.status}" var="st"
-	        			itemLabel="#{st.value}" itemValue="#{st.value}" />
+	        			itemLabel="#{st.value}" itemValue="#{st}" />
 				</p:selectOneMenu>	
 			</p:panelGrid>
 		</p:dialog>
