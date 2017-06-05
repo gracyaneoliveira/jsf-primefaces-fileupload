@@ -17,6 +17,7 @@ public class AulaBean implements Serializable{
 	private String diaAula;
 	private String hora = "00:00";
 	private Status statusEnum;
+	private String controle;
 	
 	public AulaBean(){
 		
@@ -63,6 +64,14 @@ public class AulaBean implements Serializable{
 
 	public void setStatusEnum(Status statusEnum) {
 		this.statusEnum = statusEnum;
+	}
+
+	public String getControle() {
+		return controle;
+	}
+
+	public void setControle(String controle) {
+		this.controle = controle;
 	}
 	
 }

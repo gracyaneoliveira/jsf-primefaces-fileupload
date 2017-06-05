@@ -15,28 +15,33 @@
 	<h:form id="frm">
 		<p:messages />
 		<p:button value="Abrir dialog" onclick="PF('meuDialog').show(); return false;" />
-	
+		
 		<p:dialog header="Acordar" widgetVar="meuDialog"
-			modal="true" resizable="false">
+			modal="true" resizable="false" width="500px">
 			
-			<p:panelGrid columns="2">
-				<p:outputLabel value="Hora : "/>
-				<p:outputLabel value="#{aulaBean.hora}" id="hr" title="Hora :" 
-				style="background-color:#008bec; 
-								border-radius:2px; 
-								padding: 2px 6px; 
-								vertical-align:middle;color:#fff; font-size: 13px;"/>
-				<p:outputLabel value="Dia:" for="dia" />
-				<p:selectOneMenu id="dia" value="#{aulaBean.statusEnum}" required="true">
-					<p:ajax event="change" process="@this" update="hr"
-						listener="#{aulaBean.defineHora}"/>
-				
-	    			<f:selectItem itemLabel="Selecione" itemValue=""/>
-	    			<f:selectItems value="#{aulaBean.status}" var="st"
-	        			itemLabel="#{st.value}" itemValue="#{st}" />
-				</p:selectOneMenu>	
+			<p:panelGrid columns="2" style="display:inline-block;">
+					<p:outputLabel value="Hora : "/>
+					<p:outputLabel value="#{aulaBean.hora}" id="hr" title="Hora :" 
+							style="background-color:#008bec; 
+									border-radius:2px; 
+									padding: 2px 6px; 
+									vertical-align:middle;color:#fff; font-size: 13px;"/>
+					<p:outputLabel value="Dia : " for="dia1" />
+					<p:selectOneMenu id="dia1" value="#{aulaBean.statusEnum}" 
+						required="true" widgetVar="wvSelect">
+						
+						<p:ajax event="change" process="@this" update="hr"
+							listener="#{aulaBean.defineHora}">
+							<f:setPropertyActionListener value="#{aulaBean.statusEnum.value}" target="#{aulaBean.controle}"/>
+						</p:ajax>
+					
+		    			<f:selectItem itemLabel="Selecione" itemValue=""/>
+		    			<f:selectItems value="#{aulaBean.status}" var="st"
+		        			itemLabel="#{st.value}" itemValue="#{st}"/>
+					</p:selectOneMenu>
 			</p:panelGrid>
 		</p:dialog>
+		
 	</h:form>
 
 </h:body>

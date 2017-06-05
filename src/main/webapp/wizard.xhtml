@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+		<h:outputStylesheet>
+			.outputLabel {
+    			font-weight: bold;
+			}
+			
+			.value {
+			    width: 80%;
+			    padding: 4px;
+			}
+			
+			.label {
+			    width: 20%;
+			    padding: 4px;
+			}
+			
+			.grid {
+			    width: 33%;
+			    padding: 4px;
+			}
+			
+			.ctn {
+				background: #f1f1f1;
+				height:400px;
+				display:flex;
+				flex-direction:row;
+			}
+			
+			.item {
+				background: #fff; /*#F0F0F0*/;
+				margin:5px;
+				width:100%; 
+				padding: 10px;
+				/*-webkit-box-shadow: 0px 2px 8px -1px rgba(0,0,0,0.24);*/
+				box-shadow: 0 1px 2px rgba(0,0,0,.2);
+			}
+		</h:outputStylesheet>
+	
+		<title>Primefaces DefaultCommand</title>
+	</h:head>
+	
+<h:body>	
+	<h:form>
+                 
+    <p:growl id="growl" sticky="true" showDetail="true"/>
+ 
+    <p:wizard flowListener="#{userWizardBean.onFlowProcess}">
+        <p:tab id="personal" title="Personal">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputText value="Firstname: *" />
+                    <p:inputText value="Gracyane" required="true" label="Firstname"/>
+ 
+                    <h:outputText value="Lastname: *" />
+                    <p:inputText value="Oliveira" required="true" label="Lastname"/>
+ 
+                    <h:outputText value="Age: " />
+                    <p:inputText value="36" />
+ 
+                    <h:outputText value="Skip to last: " />
+                    <h:selectBooleanCheckbox value="#{userWizardBean.skip}" />
+                </h:panelGrid>
+        </p:tab>
+ 
+        <p:tab id="address" title="Address">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputText value="Street: " />
+                    <p:inputText value="Rua C, 786" />
+ 
+                    <h:outputText value="Postal Code: " />
+                    <p:inputText value="60842-220" />
+ 
+                    <h:outputText value="City: " />
+                    <p:inputText value="Fortaleza" />
+ 
+                    <h:outputText value="Skip to last: " />
+                    <h:selectBooleanCheckbox value="#{userWizardBean.skip}" />
+                </h:panelGrid>
+        </p:tab>
+ 
+        <p:tab id="contact" title="Contact">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputText value="Email: *" />
+                    <p:inputText value="gracyane@hotmail.com" required="true" label="Email"/>
+ 
+                    <h:outputText value="Phone: " />
+                    <p:inputText value="32229-2946"/>
+ 
+                    <h:outputText value="Additional Info: " />
+                    <p:inputText value="success"/>
+                </h:panelGrid>
+        </p:tab>
+ 
+        <p:tab id="confirm" title="Confirmation">
+            	<div class="ctn">
+ 					<div class="item">           	
+	                    <h:panelGrid columns="2" columnClasses="label, value">
+	                        <h:outputText value="Firstname: " style="font-size:11px; color:#767676; text-transform: uppercase;"/>
+	                        <h:outputText value="Gracyane" styleClass="outputLabel"/>
+	 
+	                        <h:outputText value="Lastname: " style="font-size:11px; color:#767676; text-transform: uppercase;"/>
+	                        <h:outputText value="Oliveira" styleClass="outputLabel"/>
+	 
+	                        <h:outputText value="Age: " style="font-size:11px; color:#767676; text-transform: uppercase;"/>
+	                        <h:outputText value="06" styleClass="outputLabel"/>
+	                    </h:panelGrid>
+	 				 </div>
+	 				 <div class="item">
+	                    <h:panelGrid columns="2" columnClasses="label, value">
+	                        <h:outputText value="Street: " style="font-size:11px; color:#767676; text-transform: uppercase;"/>
+	                        <h:outputText value="Rua C, 786" styleClass="outputLabel"/>
+	 
+	                        <h:outputText value="Postal: " style="font-size:11px; color:#767676; text-transform: uppercase;"/>
+	                        <h:outputText value="60842-220" styleClass="outputLabel"/>
+	 
+	                        <h:outputText value="City: " style="font-size:11px; color:#767676; text-transform: uppercase;"/>
+	                        <h:outputText value="Fortaleza" styleClass="outputLabel"/>
+	                    </h:panelGrid>
+	 				</div>
+	 				<div class="item">
+	 						<div style="background:#f1f1f1; padding-top:10px; padding-bottom:10px; 
+	 									margin-bottom:10px; text-align: center; color:#666; font-weight: bold;">
+	 							BANNER
+	 						</div>
+	 						<div style="margin-bottom: 10px; border-bottom : 1px solid #e2e2e2; padding-bottom:10px; margin-left:5px;">
+	                        	<h:outputText value="Email : " style="font-size:11px; color:#767676; text-transform: uppercase;"/>
+	                        	<h:outputText value="gracyane@hotmail.com" style="font-size:12px; color:#767676; font-weight: bold;"/>
+	 						</div>
+	 						<div style="margin-bottom: 10px; border-bottom : 1px solid #e2e2e2; padding-bottom:10px; margin-left:5px;">
+		                        <h:outputText value="Phone : " style="font-size:11px; color:#767676; text-transform: uppercase;"/>
+		                        <h:outputText value="32292946" style="font-size:12px; color:#767676; font-weight: bold;"/>
+	 						</div>
+	 						<div style="margin-bottom: 10px; border-bottom : 1px solid #e2e2e2; padding-bottom:10px; margin-left:5px;">
+	                        	<h:outputText value="Info : " style="font-size:11px; color:#767676; text-transform: uppercase;"/>
+	                        	<h:outputText value="success" style="font-size:12px; color:#767676; font-weight: bold;"/>
+                        	</div>
+                    </div>
+ 				</div>
+                <p:commandButton value="Submit" actionListener="#{userWizardBean.save}" update="growl" process="@this"/>
+        </p:tab>
+    </p:wizard>
+ 
+</h:form>
+</h:body>
+</html>

@@ -39,6 +39,8 @@ public class UploadAvancadoBean implements Serializable {
 	private StreamedContent imageBanner1;
 	private StreamedContent imageBanner2;
 	private File fileBanner;
+	
+	private String testCss;
 
 	@PostConstruct
 	public void postConstruct() {
@@ -51,6 +53,10 @@ public class UploadAvancadoBean implements Serializable {
 		}
 	}
 
+	public void mudaCss(){
+		this.testCss = "cor";
+	}
+	
 	public void carregaImagens(List<File> files) throws IOException {
 		for (File file : files) {
 			arquivos.add(new BannerFile(file));
@@ -167,5 +173,12 @@ public class UploadAvancadoBean implements Serializable {
 	public void setFileBanner(File fileBanner) {
 		this.fileBanner = fileBanner;
 	}
-	
+
+	public String getTestCss() {
+		return testCss;
+	}
+
+	public void setTestCss(String testCss) {
+		this.testCss = testCss;
+	}
 }

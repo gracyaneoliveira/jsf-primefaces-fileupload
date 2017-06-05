@@ -8,11 +8,15 @@
 <ui:composition template="layout.xhtml">
 	<ui:define name="head">
 		Upload Avançado
+		<h:outputStylesheet library="css" name="estilo.css" />
 	</ui:define>
 
 	<ui:define name="body">
 		<h:form>
 			<p:growl showDetail="true" autoUpdate="true" />
+			
+			<p:commandButton value="Muda Css" action="#{uploadAvancadoBean.mudaCss}" update="imageBanner1 imageBanner2"
+			process="@this"/>
 
 			<h:panelGrid columns="2">
 				<p:outputLabel value="Uplaod: " for="fileUpload" />
@@ -36,8 +40,9 @@
 			
 			<p:panel id="banner1" header="Banner 1" style="margin-bottom:20px; width:330px; display:inline-block;" >
  
-				<p:graphicImage value= "/resources/images/semimages.jpg" style="border:1px solid gray;" alt="banner 1" 
-				rendered="#{empty uploadAvancadoBean.imageBanner1 or uploadAvancadoBean.imageBanner1 == null}"/>
+				<p:graphicImage id="imageBanner1" value= "/resources/images/semimages.jpg" alt="banner 1" 
+				rendered="#{empty uploadAvancadoBean.imageBanner1 or uploadAvancadoBean.imageBanner1 == null}"
+				styleClass="#{uploadAvancadoBean.testCss ==null ? 'corV' : 'corB'}" />
 				<p:graphicImage value= "#{uploadAvancadoBean.imageBanner1}" style="border:1px solid gray;" alt="banner 11" 
 				rendered="#{not empty uploadAvancadoBean.imageBanner1}" width="285px">
 					 <f:param name="idBanner" value="#{uploadAvancadoBean.fileBanner.canonicalFile}" />
@@ -47,8 +52,9 @@
    			 
    			 <p:panel id="banner2" header="Banner 2" style="margin-bottom:20px; width:330px; display:inline-block;" >
  
-				<p:graphicImage value= "/resources/images/semimages.jpg"  style="border:1px solid gray;" alt="banner" 
-				rendered="#{empty uploadAvancadoBean.imageBanner2}"/>
+				<p:graphicImage id="imageBanner2" value= "/resources/images/semimages.jpg" alt="banner" 
+				rendered="#{empty uploadAvancadoBean.imageBanner2}" 
+				styleClass="#{uploadAvancadoBean.testCss ==null ? 'corV' : 'corB'}"/>
 				<p:graphicImage value= "#{uploadAvancadoBean.imageBanner2}"  style="border:1px solid gray;" alt="banner" 
 				rendered="#{not empty uploadAvancadoBean.imageBanner2}"/>
  
