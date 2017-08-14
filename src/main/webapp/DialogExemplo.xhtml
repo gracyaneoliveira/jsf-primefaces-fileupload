@@ -8,18 +8,75 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Dialog com ajax e SelectOneMenu</title>
+	
+	<h:outputScript>
+			function countLetters(box,maxlength,letras){
+				 var conta = maxlength - box.length;
+				 document.getElementById(letras).innerHTML = 
+				 "(" + conta + ")";
+			}
+	</h:outputScript>
+	
+	<h:outputStylesheet>
+		.meuteste > *>tr.ui-widget-header {
+		    border: 1px solid #eeeeee;
+		    background: #9a9a9a !important;
+		    color: #f5f5f5;
+		    font-weight: initial !important; 
+		}
+		
+		.testeconfirm{
+			width:276px !important;
+		}
+		
+		.testeconfirm>.ui-dialog-titlebar.ui-widget-header{
+			border-bottom:1px solid #dddddd !important;	
+		}
+		
+		.testeconfirm>.ui-dialog-titlebar>.ui-dialog-title{
+			font-size:18px !important;
+		}
+		
+		.testeconfirm>.ui-dialog-content.ui-widget-content {
+				
+		}
+		
+		.testeconfirm>.ui-dialog-buttonpane.ui-dialog-footer.ui-widget-content{
+			border:none !important;
+			text-align: center;
+		}
+		
+		.testeconfirm>.ui-dialog-content.ui-widget-content>.ui-confirm-dialog-message{
+		    display: block;
+		    margin-top:0;
+		}
+	</h:outputStylesheet>
+	
 </h:head>
 
 <h:body>
 	
+	<p:button value="Abrir dialog" onclick="PF('meuDialog').show(); return false;" />
 	<h:form id="frm">
-		<p:messages />
-		<p:button value="Abrir dialog" onclick="PF('meuDialog').show(); return false;" />
+	
+		<p:commandButton value="Destroy the World">
+     	   <p:confirm header="Confirmation" message="Você está preste a deletar o Banner 63 propaganda gvt. Você quer sair?" icon="ui-icon-alert" />
+	    </p:commandButton>
+	 
+	    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="testeconfirm" closable="false" 
+	    style="width:276px !important;">
+	        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	    </p:confirmDialog>
 		
-		<p:dialog header="Acordar" widgetVar="meuDialog"
+		<p:dialog header="Acordar" widgetVar="meuDialog" id="dialog"
 			modal="true" resizable="false" width="500px">
-			
-			<p:panelGrid columns="2" style="display:inline-block;">
+			<p:messages id="msg"/>
+					
+			<p:panelGrid columns="2" style="display:inline-block;" styleClass="meuteste">
+			<f:facet name="header">
+				 Banner Information
+			</f:facet>
 					<p:outputLabel value="Hora : "/>
 					<p:outputLabel value="#{aulaBean.hora}" id="hr" title="Hora :" 
 							style="background-color:#008bec; 
@@ -28,7 +85,7 @@
 									vertical-align:middle;color:#fff; font-size: 13px;"/>
 					<p:outputLabel value="Dia : " for="dia1" />
 					<p:selectOneMenu id="dia1" value="#{aulaBean.statusEnum}" 
-						required="true" widgetVar="wvSelect">
+						required="true" widgetVar="wvSelect" >
 						
 						<p:ajax event="change" process="@this" update="hr"
 							listener="#{aulaBean.defineHora}">
@@ -39,6 +96,13 @@
 		    			<f:selectItems value="#{aulaBean.status}" var="st"
 		        			itemLabel="#{st.value}" itemValue="#{st}"/>
 					</p:selectOneMenu>
+					<p:outputLabel value="Nome: " for="nome"/>
+					<p:inputText value="#{aulaBean.nome}" id="nome" label="Nome" required="true" 
+						onkeyup="countLetters(this.value,15,'frm:letras')"/>
+					<p:outputLabel value="Qtd :"/>
+					<p:outputLabel id="letras" 
+ 									value="#{not empty aulaBean.nome.length()? aulaBean.nome.length():'(15)'} "/>
+					
 			</p:panelGrid>
 		</p:dialog>
 		

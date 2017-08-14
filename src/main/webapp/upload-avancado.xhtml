@@ -9,34 +9,79 @@
 	<ui:define name="head">
 		Upload Avançado
 		<h:outputStylesheet library="css" name="estilo.css" />
+		<h:outputStylesheet>
+			.remove {
+				display:none;
+				position:absolute;
+				bottom: 155px;
+				right: 8px;
+				background-color: #5f5b5b;
+				font-family: Arial;
+				padding: 0px 6px 2px 5px;
+				border-radius: 100%;
+				color: white;
+				width: 11px;
+				height: 20px;
+				text-align: center;
+				font-size: 15px;
+				font-weight: bold;
+				text-decoration:none;
+				border-style: none;
+			}
+			
+			.ctn:hover > .remove{
+				display:inline;
+			}
+			
+			.remove:hover {
+				background-color: #b1a8a8;
+			}
+			
+			.ui-datatable-footer{
+				
+			}
+		</h:outputStylesheet>
 	</ui:define>
 
 	<ui:define name="body">
-		<h:form>
-			<p:growl showDetail="true" autoUpdate="true" />
+		<h:form id="frm">
+			<p:messages id="msg" showDetail="true" autoUpdate="true"/>
 			
 			<p:commandButton value="Muda Css" action="#{uploadAvancadoBean.mudaCss}" update="imageBanner1 imageBanner2"
 			process="@this"/>
+			
+			<div style="position:relative;width: 285px;" class="ctn">
+				<p:graphicImage id="imageclose" value= "/resources/images/semimages.jpg" alt="banner 1" style=" border-style:solid;" />
+				<p:commandLink styleClass="remove" onclick="alert('deseja remover a imagem?')">
+						x
+				</p:commandLink>
+			</div>
 
 			<h:panelGrid columns="2">
-				<p:outputLabel value="Uplaod: " for="fileUpload" />
-				<p:fileUpload id="fileUpload"
+				<p:outputLabel id="uploadlabel" value="Uplaod: " for="fileUpload">
+				</p:outputLabel>
+				<p:fileUpload id="fileUpload" widgetVar="fu"
 					fileUploadListener="#{uploadAvancadoBean.upload}"
-					update="dataTable banner1 banner2" label="Escolher" uploadLabel="Enviar"
-					cancelLabel="Cancelar" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+					update="dataTable banner1 banner2" 
+					label="Escolher" 
+					uploadLabel="Enviar"
+					cancelLabel="Cancelar" 
+					allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
 					invalidFileMessage="São permitidas somente imagens (gif, jpeg, jpg e png)"
 					sizeLimit="921600"
 					invalidSizeMessage="O tamanho máximo permitido é de 9KB."
 					fileLimit="5"
 					fileLimitMessage="Só é possível escolher 5 arquivos por vez."
-					multiple="true" auto="false"
-					onstart="console.log('Iniciando envio de arquivo')"
-					onerror="console.log('Erro na requisição de envio')"
-					oncomplete="console.log('Envio concluído')" />
+					multiple="true" auto="true" 
+					onstart="console.log('Iniciando envio de arquivo ...')"
+					onerror="console.log('Erro no envio de arquivo')"
+					oncomplete="console.log('Envio concluído')">
+					<p:graphicImage value= "/resources/images/semimages.jpg" alt="banner 1" width="79px;" 
+					onclick="PF('fu').messageContainer.appendTo($('#frm\\:msg'));PF('fu').buttonBar.find('input[id=frm\\:fileUpload_input]').click();"/>
+					</p:fileUpload>
 			</h:panelGrid>
 
 			<p:spacer height="20px" />
-			
 			
 			<p:panel id="banner1" header="Banner 1" style="margin-bottom:20px; width:330px; display:inline-block;" >
  
@@ -60,8 +105,18 @@
  
    			 </p:panel>
    			 
-			<p:dataTable value="#{uploadAvancadoBean.arquivos}" var="file"
-				id="dataTable" style="width:80%">
+			<p:dataTable 
+				value="#{uploadAvancadoBean.arquivos}" 
+				var="file"
+				id="dataTable" 
+				style="width:100%"
+				rows="5"
+                paginator="true"
+                paginatorPosition="bottom"
+                paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="5,10,15"
+                >
+				
 				<f:facet name="header">
 			        Arquivos
 			    </f:facet>
@@ -86,8 +141,19 @@
 						<f:param name="name" value="#{file.file.name}" />
 					</p:graphicImage>
 				</p:column>
+				<f:facet name="footer" id="meufooter">
+			        Arquivos
+			    </f:facet>
 			</p:dataTable>
+			<div id="ctn" style="float:right; margin:10px 0 0 0;"></div>
 		</h:form>
+	<h:outputScript>
+			$(function(){
+				$("select[name*='frm\\:dataTable_rppDD']").appendTo("#ctn").css("float","right");
+				$("#frm\\:dataTable_paginator_bottom").css("background-color", "firebrick");
+			});
+	</h:outputScript>
 	</ui:define>
+	
 </ui:composition>
 </html>

@@ -18,7 +18,16 @@ public class AulaBean implements Serializable{
 	private String hora = "00:00";
 	private Status statusEnum;
 	private String controle;
+	private String nome;
 	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
 	public AulaBean(){
 		
 	}
@@ -36,6 +45,10 @@ public class AulaBean implements Serializable{
 			setHora("00:00");
 		}
 		statusEnum = null;
+	}
+	
+	public void save(){
+		System.out.println("Teste");
 	}
 	
 	public Status [] getStatus(){
