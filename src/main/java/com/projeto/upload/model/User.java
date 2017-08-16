@@ -1,6 +1,7 @@
 package com.projeto.upload.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class User implements Serializable {
 	 
@@ -25,6 +26,9 @@ public class User implements Serializable {
     private String email;
      
     private String phone;
+    
+    private Date startDate;
+    private Date startTime;
  
     public String getFirstname() {
         return firstname;
@@ -104,6 +108,29 @@ public class User implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", age=" + age + ", street="
+				+ street + ", city=" + city + ", postalCode=" + postalCode + ", info=" + info + ", email=" + email
+				+ ", phone=" + phone + "]";
 	}
 
 	@Override

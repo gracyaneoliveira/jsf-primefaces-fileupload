@@ -1,12 +1,13 @@
 package com.projeto.upload.controller;
 
 import java.io.Serializable;
-import java.util.Iterator;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 
 import com.projeto.upload.model.User;
@@ -47,8 +48,22 @@ public class UserWizardBean implements Serializable {
     public void setSkip(boolean skip) {
         this.skip = skip;
     }
+    
+    public void executeScript(String script){
+    	RequestContext context = RequestContext.getCurrentInstance();          
+        context.execute(script); 
+    }
      
     public String onFlowProcess(FlowEvent event) {
+    	
+    	if(event.getOldStep().equals("personal") && event.getNewStep().equals("address")){
+    		executeScript("navigationServer();");
+    	}
+    	
+    	if(event.getOldStep().equals("address") && event.getNewStep().equals("contact")){
+    		executeScript("navigationServer();");
+    	}
+    	
         if(skip) {
             skip = false;   //reset in case user goes back
             return "confirm";

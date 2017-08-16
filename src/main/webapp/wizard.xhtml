@@ -105,14 +105,20 @@
 	                <p:messages />
 	                <h:panelGrid columns="2" columnClasses="label, value">
 	                    <h:outputText value="Street: " />
-	                    <p:inputText value="Rua C, 786" />
+	                    <p:inputText id="street" value="Rua C, 786" />
 	 
 	                    <h:outputText value="Postal Code: " />
-	                    <p:inputText value="60842-220" />
+	                    <p:inputText id="postalcode" value="60842-220" />
 	 
 	                    <h:outputText value="City: " />
 	                    <p:inputText value="Fortaleza" id="city"/>
 	 
+	                    <p:outputLabel for="datetime" value="Date:" />
+				        <p:calendar id="datetime" value="#{userWizardBean.user.startDate}" pattern="dd/MM/yyyy" />
+				 
+				        <p:outputLabel for="time" value="Time:" />
+				        <p:calendar id="time" value="#{userWizardBean.user.startTime}" pattern="HH:mm" timeOnly="true"  />
+
 	                    <h:outputText value="Skip to last: " />
 	                    <h:selectBooleanCheckbox value="#{userWizardBean.skip}" />
 	                </h:panelGrid>
@@ -125,85 +131,13 @@
 	                    <p:inputText value="gracyane@hotmail.com" required="true" label="Email" id="email"/>
 	 
 	                    <h:outputText value="Phone: " />
-	                    <p:inputText value="32229-2946"/>
+	                    <p:inputText id="phone" value="32229-2946"/>
 	 
 	                    <h:outputText value="Additional Info: " />
-	                    <p:inputText value="success"/>
+	                    <p:inputText id="info" value="success"/>
 	                </h:panelGrid>
 	        </p:tab>
 	        
-	        <p:tab id="tablecars" title="Carros" >
-	        	<p:outputPanel id="panelTable" style="border:1px solid gray; width:500px;border-radius:3px;">
-	        	 <p:dataTable var="car" value="#{dtFilterView.cars}" widgetVar="carsTable" style="display:inline-block;"
-                 	emptyMessage="No cars found with given criteria" filteredValue="#{dtFilterView.filteredCars}" 
-                 	scrollable="true" scrollWidth="500" 
-              		rows="3"
-              		paginatorPosition="bottom"
-                    paginator="true"
-                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                    rowsPerPageTemplate="3,5,10">
- 
-			        <f:facet name="header">
-			            <p:outputPanel>
-			                <h:outputText value="Search all fields:" />
-			                <p:inputText id="globalFilter" onkeyup="PF('carsTable').filter()" style="width:150px" placeholder="Enter keyword"/>
-			            </p:outputPanel>
-			        </f:facet>
-			 
-			        <p:column filterBy="#{car.id}" headerText="Id" filterMatchMode="contains"
-			        			width="120" >
-			            <h:outputText value="#{car.id}" />
-			        </p:column>
-			 
-			        <p:column filterBy="#{car.year}" headerText="Year" filterMatchMode="lte" width="200" styleClass="year-spinner">
-			            <f:facet name="filter">
-			                <p:spinner onchange="PF('carsTable').filter()" styleClass="year-spinner">
-			                    <f:converter converterId="javax.faces.Integer" />
-			                </p:spinner>
-			            </f:facet>
-			            <h:outputText value="#{car.year}" />
-			        </p:column>
-			 
-			        <p:column filterBy="#{car.brand}" headerText="Brand" filterMatchMode="exact" width="150">
-			            <f:facet name="filter">
-			                <p:selectOneMenu onchange="PF('carsTable').filter()" >
-			                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
-			                    <f:selectItems value="#{dtFilterView.brands}" />
-			                </p:selectOneMenu>
-			            </f:facet>
-			            <h:outputText value="#{car.brand}" />
-			        </p:column>
-			 
-			        <p:column filterBy="#{car.color}" headerText="Color" filterMatchMode="in" width="120">
-			            <f:facet name="filter">
-			                <p:selectCheckboxMenu label="Colors" onchange="PF('carsTable').filter()" panelStyle="width:125px" scrollHeight="150">
-			                    <f:selectItems value="#{dtFilterView.colors}" />
-			                </p:selectCheckboxMenu>
-			            </f:facet>
-			            <h:outputText value="#{car.color}" />
-			        </p:column>
-			 
-			        <p:column filterBy="#{car.soldState}" headerText="Status" filterMatchMode="equals" width="250">
-			            <f:facet name="filter">
-			                <p:selectOneButton onchange="PF('carsTable').filter()">
-			                    <f:converter converterId="javax.faces.Boolean" />
-			                    <f:selectItem itemLabel="All" itemValue="" />
-			                    <f:selectItem itemLabel="Sold" itemValue="true" />
-			                    <f:selectItem itemLabel="Sale" itemValue="false" />
-			                </p:selectOneButton>
-			            </f:facet>
-			            <h:outputText value="#{car.soldState ? 'Sold': 'Sale'}" />
-			        </p:column>
-			 
-			        <p:column filterBy="#{car.price}" headerText="Price" filterFunction="#{dtFilterView.filterByPrice}" width="120">
-			            <h:outputText value="#{car.price}">
-			                <f:convertNumber currencySymbol="$" type="currency"/>
-			            </h:outputText>
-			        </p:column>
-		    	</p:dataTable>
-		    	</p:outputPanel>
-	        </p:tab>
-	 
 	        <p:tab id="confirm" title="Confirmation">
 	            	<div class="ctn">
 	 					<div class="item">           	
@@ -255,10 +189,10 @@
 	    
 	    <div style="width:100%;clear:both;border:1px solid red; height:34px;">
 	        <p:commandButton value="Back" icon="ui-icon-arrow-1-w" style="display:inline-block; float:left;"
-			    iconPos="right" onclick="PF('wvWizard').back();" oncomplete="navigation();"/>
+			    iconPos="right" oncomplete="PF('wvWizard').back();" onstart="navigationClient();"/>
 			
 			<p:commandButton value="Next" icon="ui-icon-arrow-1-e" style="display:inline-block; float:right;"
-			    iconPos="left" onclick="novo(); PF('wvWizard').next();" oncomplete="navigation();"/>
+			    iconPos="left" oncomplete="PF('wvWizard').next();" onstart="navigationClient();"/>
 	    </div>
 	    
 	</h:form>
@@ -279,19 +213,171 @@ message="Voce tem certeza que quer sair, os dados serão perdidos.">
 </p:confirmDialog>
 
 <h:outputScript>
-	var currentStep = 0
-	var nextStep;
-
-	function countLetters(box,maxlength,letras){
-		 var conta = maxlength - box.length;
-		 document.getElementById(letras).innerHTML = 
-		 "(" + conta + ")";
+    var tabperson = 'personal';
+    var tabaddress = 'address';
+    var tabcontact = 'contact';
+    var tabconfirm = 'confirm';
+	var p1,p2,a1,a2,c1,c2;
+	
+	function getData(elementId){
+		return document.getElementById(elementId).value;
+	}
+	
+	var criarPessoa = function () {
+		return {
+			nome : getData('frm:name'),
+			lastname : getData('frm:lastname'),
+			age : getData('frm:age')
+		};
+	}
+	
+	var criarAddress = function () {
+		return {
+			street: getData('frm:street'),
+			postalcode: getData('frm:postalcode'),
+			city: getData('frm:city'),
+			startdate: getData('frm:datetime_input'),
+			timestart : getData('frm:time_input')
+		};
+	}
+	
+	var contact = function () {
+		return {
+			email: getData('frm:email'),
+			phone: getData('frm:phone'),
+			info: getData('frm:info')
+		};
 	}
 	
 	function initWz(){
-	 	pessoa.sayName();
-	 	address.sayData();
+	 	p1 = criarPessoa();
+	 	console.log('p1',p1);
 		console.log('abrindo a aplicação...');
+	}
+	
+	function equals(obj1, obj2) {
+	    function _equals(obj1, obj2) {
+	        var clone = $.extend(true, {}, obj1),
+	            cloneStr = JSON.stringify(clone);
+	        return cloneStr === JSON.stringify($.extend(true, clone, obj2));
+   		}
+    return _equals(obj1, obj2) &amp;&amp; _equals(obj2, obj1);
+	}
+	
+	function closeWz(){ 
+		var currentStep = getCurrentStep();
+		var hasChange = false;
+		if(currentStep === tabperson){
+			p2 = criarPessoa();
+
+			if(!equals(p1, p2)){
+			   hasChange = true;
+			}
+			
+			if(a1 !=null){
+				if(!equals(a1, a2)){
+			   		hasChange = true;
+				}
+				
+				if(c1!=null){
+					if(!equals(c1, c2)){
+			   			hasChange = true;
+					}
+				}
+			}
+		}else if(currentStep === tabaddress){
+			a2 = criarAddress();
+			
+			if(!equals(a1, a2)){
+			   hasChange = true;
+			}
+			
+			if(!equals(p1, p2)){
+			   hasChange = true;
+			}
+			
+			if(c1!=null){
+				if(!equals(c1, c2)){
+		   			hasChange = true;
+				}
+			}
+		}else if(currentStep === tabcontact){
+			if(!equals(p1, p2)){
+			   hasChange = true;
+			}
+	
+			if(!equals(a1, a2)){
+			   hasChange = true;
+			}
+						
+			if(!equals(c1, c2)){
+	   			hasChange = true;
+			}
+		}else if(currentStep === tabconfirm){
+			if(!equals(p1, p2)){
+			   hasChange = true;
+			}
+	
+			if(!equals(a1, a2)){
+			   hasChange = true;
+			}
+						
+			if(!equals(c1, c2)){
+	   			hasChange = true;
+			}
+		}
+		
+		if(hasChange){
+			hasChange = false;
+			PF('confirmCloseWz').show();
+		}
+	}
+		
+	function getCurrentStep(){
+		return PF('wvWizard').currentStep;
+	}
+		
+	function navigationClient(){
+		console.log("## -- NAVIGATION CLIENT -- ##");
+		var currentStep = getCurrentStep();
+		console.log("current step :", currentStep);
+		
+		if(currentStep === tabperson){
+		   p2 = criarPessoa();
+		   console.log('p2',p2);
+		}
+		
+		if(currentStep === tabaddress){	   
+		    a2 = criarAddress();
+		    console.log('a2',a2);
+	   	}
+	   	
+ 		if(currentStep === tabcontact){
+		    c2 = contact();
+		    console.log('c2',c2);
+	   	}
+	}
+	
+	function navigationServer() {
+		var currentStep = getCurrentStep();
+		if(a1 == null){
+		   a1 = criarAddress();
+		   console.log('a1',a1);
+	    }
+	    
+	    if(currentStep === tabaddress){
+	   		if(c1 == null){
+			   c1 = contact();
+			   console.log('c1',c1);
+		    }
+	    }
+	}
+	
+	function actionNavigation(){
+		var tabIndex = PrimeFaces.widgets.wvWizard.getStepIndex(PrimeFaces.widgets.wvWizard.currentStep);
+		var tabName = PrimeFaces.widgets.wvWizard.cfg.steps[1];
+		
+		console.log('tabIndex : ', tabIndex);	
 	}
 	
 	var pessoa = {
@@ -321,45 +407,12 @@ message="Voce tem certeza que quer sair, os dados serão perdidos.">
 			this.city = document.getElementById('frm:city') == null?'': document.getElementById('frm:city').value;
 		}
 	}
-		
-	function equals(obj1, obj2) {
-	    function _equals(obj1, obj2) {
-	        var clone = $.extend(true, {}, obj1),
-	            cloneStr = JSON.stringify(clone);
-	        return cloneStr === JSON.stringify($.extend(true, clone, obj2));
-   		}
-    return _equals(obj1, obj2) &amp;&amp; _equals(obj2, obj1);
-	}
 	
-	function closeWz(){ 
-	    pessoa2.sayName();
-	    address2.sayData();
-	    console.log('Pessoa : ', equals(pessoa, pessoa2).toString());
-	    console.log('Address :', equals(address,address2).toString());
-	    console.log('fechando a aplicação...', pessoa.nome);
-	        
-	    if(!equals(pessoa, pessoa2) &#124;&#124; !equals(address,address2)){
-	    	PF('confirmCloseWz').show();
-	    }
-    
+	function countLetters(box,maxlength,letras){
+		 var conta = maxlength - box.length;
+		 document.getElementById(letras).innerHTML = 
+		 "(" + conta + ")";
 	}
-	
-	function novo(){
-		pessoa2.sayName();
-	}
-	
-	function navigation(){
-		var tabIndex = PrimeFaces.widgets.wvWizard.getStepIndex(PrimeFaces.widgets.wvWizard.currentStep);
-		var tabName = PrimeFaces.widgets.wvWizard.cfg.steps[1];
-		if(nav &amp;&amp; tabIndex === 1){
-			address.sayData();
-			console.log('tab1');
-			nav = false;
-		}
-		
-		console.log('tabIndex : ', tabIndex);	
-	}
-				
 </h:outputScript>
 
 </h:body>
