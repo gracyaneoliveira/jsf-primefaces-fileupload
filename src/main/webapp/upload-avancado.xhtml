@@ -8,6 +8,9 @@
 <ui:composition template="layout.xhtml">
 	<ui:define name="head">
 		Upload Avançado
+		<h:outputStylesheet library="css" name="jquery.dataTables.min.css" />
+		<h:outputStylesheet library="css" name="fixedColumns.dataTables.min.css" />
+
 		<h:outputStylesheet library="css" name="estilo.css" />
 		<h:outputStylesheet>
 			.remove {
@@ -40,6 +43,12 @@
 			.ui-datatable-footer{
 				
 			}
+			
+			    th, td { white-space: nowrap; }
+			    div.dataTables_wrapper {
+			        width: 800px;
+			        margin: 0 auto;
+			    }
 		</h:outputStylesheet>
 	</ui:define>
 
@@ -62,7 +71,7 @@
 				</p:outputLabel>
 				<p:fileUpload id="fileUpload" widgetVar="fu"
 					fileUploadListener="#{uploadAvancadoBean.upload}"
-					update="dataTable banner1 banner2" 
+					update="dataTables banner1 banner2" 
 					label="Escolher" 
 					uploadLabel="Enviar"
 					cancelLabel="Cancelar" 
@@ -108,8 +117,7 @@
 			<p:dataTable 
 				value="#{uploadAvancadoBean.arquivos}" 
 				var="file"
-				id="dataTable" 
-				style="width:100%"
+				id="dataTables" 
 				rows="5"
                 paginator="true"
                 paginatorPosition="bottom"
@@ -147,11 +155,14 @@
 			</p:dataTable>
 			<div id="ctn" style="float:right; margin:10px 0 0 0;"></div>
 		</h:form>
+		<h:outputScript library="js" name="jquery.dataTables.min.js"/>
+		<h:outputScript library="js" name="dataTables.fixedColumns.min.js"/>
 	<h:outputScript>
 			$(function(){
 				$("select[name*='frm\\:dataTable_rppDD']").appendTo("#ctn").css("float","right");
 				$("#frm\\:dataTable_paginator_bottom").css("background-color", "firebrick");
-			});
+				
+          });
 	</h:outputScript>
 	</ui:define>
 	
