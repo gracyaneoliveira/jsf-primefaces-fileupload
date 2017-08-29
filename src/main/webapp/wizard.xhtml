@@ -80,12 +80,12 @@
 	        <p:commandButton icon="fa fa-close" oncomplete="PF('dlg1').hide();" process="@this" 
 	        				style="float:right;display: inline-block;border: none;background: transparent;"/>	         
 	 	</div>
-	    <p:messages id="growl" showDetail="true" closable="true" autoUpdate="true"/>
+	    <p:messages id="tess" showDetail="true" closable="true" autoUpdate="true" />
 	    <p:wizard flowListener="#{userWizardBean.onFlowProcess}" id="wi" showNavBar="false" widgetVar="wvWizard">
 	        <p:tab id="personal" title="Personal">
 	                <h:panelGrid columns="2" columnClasses="label, value" id="panelgrid">
 	                    <h:outputText value="Firstname: *" />
-	                    <p:inputText id="name" value="Gracyane" 
+	                    <p:inputText id="name" value="#{userWizardBean.user.firstname}" 
 	                    			required="true" label="Firstname" maxlength="15"/>
 	                    <h:outputText value="Lastname: *" />
 	                    <p:inputText value="Oliveira" required="true" label="Lastname" id="lastname"/>
@@ -198,10 +198,10 @@
 	</h:form>
 </p:dialog> 
 <p:dialog id="mdlg1" header="Modal Dialog 2" widgetVar="dlg2" modal="true" height="100" appendTo="@(body)">
-	<p:messages id="msg2" showDetail="true" showSummary="true" globalOnly="false"/>
+	<p:messages id="msg2" showDetail="true" showSummary="true"/>
 	<h:form id="form2">
 	    <h:outputText value="Nome: " />
-	    <p:inputText id="nome" label="fistname" value="#{userWizardBean.user.firstname}" required="true"/>
+	    <p:inputText id="nome" label="fistname" value="#{userWizardBean.user.firstname}"/>
        </h:form>
        <p:commandButton value="Salvar" form="form2" update="msg2" action="#{userWizardBean.save()}" ignoreAutoUpdate="true"/>
 </p:dialog>
