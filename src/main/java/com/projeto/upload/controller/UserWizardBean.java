@@ -39,10 +39,10 @@ public class UserWizardBean implements Serializable {
     public void save() {
     	if(user.getFirstname() != null && !user.getFirstname().isEmpty()){
 	        FacesMessage msg = new FacesMessage("Successful", "Welcome :" + user.getFirstname());
-	        FacesContext.getCurrentInstance().addMessage("frm:msg2",msg);
+	        FacesContext.getCurrentInstance().addMessage(null,msg);
     	}else{
     		FacesMessage msg = new FacesMessage("Erro", "sem usuário");
-	        FacesContext.getCurrentInstance().addMessage("frm:msg2",msg);
+	        FacesContext.getCurrentInstance().addMessage(null,msg);
     	}
     }
      

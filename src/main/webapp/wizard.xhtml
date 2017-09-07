@@ -80,7 +80,7 @@
 	        <p:commandButton icon="fa fa-close" oncomplete="PF('dlg1').hide();" process="@this" 
 	        				style="float:right;display: inline-block;border: none;background: transparent;"/>	         
 	 	</div>
-	    <p:messages id="tess" showDetail="true" closable="true" autoUpdate="true" />
+	    <p:messages id="tess" showDetail="true" closable="true"/>
 	    <p:wizard flowListener="#{userWizardBean.onFlowProcess}" id="wi" showNavBar="false" widgetVar="wvWizard">
 	        <p:tab id="personal" title="Personal">
 	                <h:panelGrid columns="2" columnClasses="label, value" id="panelgrid">
@@ -125,7 +125,6 @@
 	        </p:tab>
 	 
 	        <p:tab id="contact" title="Contact">
-	                <p:messages />
 	                <h:panelGrid columns="2" columnClasses="label, value">
 	                    <h:outputText value="Email: *" />
 	                    <p:inputText value="gracyane@hotmail.com" required="true" label="Email" id="email"/>
@@ -183,7 +182,7 @@
 	                        	</div>
 	                    </div>
 	 				</div>
-	                <p:commandButton value="Submit" actionListener="#{userWizardBean.save}" update="growl" process="@this"/>
+	                <p:commandButton value="Submit" actionListener="#{userWizardBean.save}" process="@this"/>
 	        </p:tab>
 	    </p:wizard>
 	    
@@ -192,7 +191,7 @@
 			    iconPos="right" oncomplete="PF('wvWizard').back();" onstart="navigationClient();"/>
 			
 			<p:commandButton value="Next" icon="ui-icon-arrow-1-e" style="display:inline-block; float:right;"
-			    iconPos="left" oncomplete="PF('wvWizard').next();" onstart="navigationClient();"/>
+			    iconPos="left" oncomplete="PF('wvWizard').next();" onstart="navigationClient();" update="frm:tess"/>
 	    </div>
 	    
 	</h:form>
